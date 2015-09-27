@@ -1,8 +1,8 @@
 import numpy
 
 
-alpha = 0.01
-num_iters = 60000
+alpha = 0.1
+num_iters = 10000
 epsilon = 1
 
 
@@ -21,19 +21,20 @@ def main():
         assert len(point) == F
         input_test.append(point)
 
-    """
-    local_train_data = input_train[:60]
-    local_test_data = input_train[60:]
-    local_test_feature = [test_datum[:-1] for test_datum in local_test_data]
-    local_test_target = [test_datum[-1] for test_datum in local_test_data]
-
-    feature_train, target_train, init_coeff = get_features(local_train_data)
-    theta, J_history = gradient_descent(feature_train, target_train, init_coeff, alpha, num_iters)
-
-    local_test_pred = get_predictions(local_test_feature, theta)
-    accuracy = get_accuracy(local_test_pred, local_test_target, epsilon)
-    print 'accuracy:', accuracy, '%'
-    """
+    # local_train_data = input_train[:60]
+    # local_test_data = input_train[60:]
+    # local_test_feature = [test_datum[:-1] for test_datum in local_test_data]
+    # local_test_target = [test_datum[-1] for test_datum in local_test_data]
+    #
+    # feature_train, target_train, init_coeff = get_features(local_train_data)
+    # theta, J_history = gradient_descent(feature_train, target_train, init_coeff, alpha, num_iters)
+    # print 'J_history:'
+    # for cost in J_history:
+    #     print 'cost:', cost
+    #
+    # local_test_pred = get_predictions(local_test_feature, theta)
+    # accuracy = get_accuracy(local_test_pred, local_test_target, epsilon)
+    # print 'accuracy:', accuracy, '%'
 
     feature_train, target_train, init_coeff = get_features(input_train)
     theta, J_history = gradient_descent(feature_train, target_train, init_coeff, alpha, num_iters)
@@ -56,7 +57,7 @@ def get_features(input_training_data):
 
 
 def create_feature(point):
-    # return [1] + row[:-1]       # Adding 1 as extra feature and rest of the features from row excep the last element which is the target value
+    # Adding all features with degree < 4 as stated in the problem
     feature = [1]
     feature += [x for x in point]
     feature += [x1 * x2 for x1 in point for x2 in point]
