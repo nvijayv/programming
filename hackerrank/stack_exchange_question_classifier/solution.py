@@ -7,6 +7,7 @@ import operator
 
 
 training_file_path = 'training.json'
+alpha = 1.0     # smoothing parameter
 
 non_char_dig_pat = re.compile(r"[^0-9a-zA-Z]")
 stopwords = frozenset([
@@ -55,9 +56,10 @@ stopwords = frozenset([
 freq_words_by_topic = dict()
 count_words_by_topic = defaultdict(int)
 freq_topics = defaultdict(int)
-
+unique_words = set()
 
 def main():
+    ### Training ###
     training_size = -1
     with open(training_file_path, 'r') as training_file:
         for line in training_file:
@@ -76,7 +78,7 @@ def main():
             freq_topics[topic] += 1
             # if topic not in count_words_by_topic:
             #     count_words_by_topic[topic] = 0
-            count_words_by_topic[topic] += 1
+            # count_words_by_topic[topic] += 1
 
             if topic not in freq_words_by_topic:
                 freq_words_by_topic[topic] = defaultdict(int)
@@ -85,15 +87,17 @@ def main():
                 #     freq_words_by_topic[topic][q_tok] = 0
                 freq_words_by_topic[topic][q_tok] += 1
                 count_words_by_topic[topic] += 1
+                unique_words.add(q_tok)
             for e_tok in e_tokens:
                 # if e_tok not in freq_words_by_topic[topic]:
                 #     freq_words_by_topic[topic][e_tok] = 0
                 freq_words_by_topic[topic][e_tok] += 1
                 count_words_by_topic[topic] += 1
+                unique_words.add(e_tok)
 
-    print >> sys.stderr, 'Done training'
-    print >> sys.stderr, 'freq_topics:', freq_topics
+    # print >> sys.stderr, 'Done training'
 
+    ### Testing ###
     num_tests = int(raw_input().strip())
     for t in range(num_tests):
         line_map = json.loads(raw_input().strip().lower())
@@ -107,10 +111,10 @@ def main():
             cand_ans[topic] = math.log(freq_topics[topic] * 1.0/training_size)
         for topic in freq_words_by_topic:
             for word in q_tokens:
-                log_prob_word_given_topic = math.log((freq_words_by_topic[topic][word]+1.0) / (count_words_by_topic[topic]+1.0))
+                log_prob_word_given_topic = math.log((freq_words_by_topic[topic][word]+alpha) / (count_words_by_topic[topic]+alpha*len(unique_words)))
                 cand_ans[topic] += log_prob_word_given_topic
             for word in e_tokens:
-                log_prob_word_given_topic = math.log((freq_words_by_topic[topic][word]+1.0) / (count_words_by_topic[topic]+1.0))
+                log_prob_word_given_topic = math.log((freq_words_by_topic[topic][word]+alpha) / (count_words_by_topic[topic]+alpha*len(unique_words)))
                 cand_ans[topic] += log_prob_word_given_topic
         print max(cand_ans.iteritems(), key=operator.itemgetter(1))[0]
 
