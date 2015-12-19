@@ -8,6 +8,7 @@ import operator
 
 training_file_path = 'training.json'
 alpha = 1.0     # smoothing parameter
+BASE_2 = 2      # logarithm base 2
 
 non_char_dig_pat = re.compile(r"[^0-9a-zA-Z]")
 stopwords = frozenset([
@@ -56,6 +57,7 @@ stopwords = frozenset([
 freq_words_by_topic = dict()
 count_words_by_topic = defaultdict(int)
 freq_topics = defaultdict(int)
+word_occur_count_by_docs = defaultdict(int)
 unique_words = set()
 
 def main():
@@ -95,7 +97,10 @@ def main():
                 count_words_by_topic[topic] += 1
                 unique_words.add(e_tok)
 
-    # print >> sys.stderr, 'Done training'
+            for tok in set(q_tokens + e_tokens):
+                word_occur_count_by_docs[tok] += 1
+
+    print >> sys.stderr, 'Done training with', training_size, 'examples'
 
     ### Testing ###
     num_tests = int(raw_input().strip())
@@ -112,10 +117,10 @@ def main():
         for topic in freq_words_by_topic:
             for word in q_tokens:
                 log_prob_word_given_topic = math.log((freq_words_by_topic[topic][word]+alpha) / (count_words_by_topic[topic]+alpha*len(unique_words)))
-                cand_ans[topic] += log_prob_word_given_topic
+                cand_ans[topic] += log_prob_word_given_topic * math.log(training_size * 1.0 / (word_occur_count_by_docs[word]+1.0), BASE_2)
             for word in e_tokens:
                 log_prob_word_given_topic = math.log((freq_words_by_topic[topic][word]+alpha) / (count_words_by_topic[topic]+alpha*len(unique_words)))
-                cand_ans[topic] += log_prob_word_given_topic
+                cand_ans[topic] += log_prob_word_given_topic * math.log(training_size * 1.0 / (word_occur_count_by_docs[word]+1.0), BASE_2)
         print max(cand_ans.iteritems(), key=operator.itemgetter(1))[0]
 
 
