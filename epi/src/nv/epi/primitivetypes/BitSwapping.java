@@ -6,7 +6,7 @@ package nv.epi.primitivetypes;
 public class BitSwapping {
 
     static long swapBits(long num, int i, int j) {
-        if (((num & (1 << i)) >> i) != ((num & (1 << j)) >> j)) {
+        if (((num >> i) & 1) != ((num >> j) & 1)) {
             num ^= (1 << i) | (1 << j);
         }
         return num;

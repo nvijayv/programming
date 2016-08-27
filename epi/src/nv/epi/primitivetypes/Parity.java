@@ -49,6 +49,7 @@ public class Parity {
     }
 
     // O(1)
+    // Getting rid of 1's in pairs from num to finally have just one (or zero) set bits.
     static long getParityVeryQuickly(long num) {
         num ^= num >> 32;
         num ^= num >> 16;
