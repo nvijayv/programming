@@ -56,9 +56,11 @@ public class LocalMinima2D {
                         colsShrinked = true;
                     }
                 }
-                if (!colsShrinked && numbers[colMinRow][cmid+1] < colMin) {
-                    cstart = cmid+1;
-                    colsShrinked = true;
+                if (!colsShrinked && cmid < cend) {
+                    if (numbers[colMinRow][cmid + 1] < colMin) {
+                        cstart = cmid+1;
+                        colsShrinked = true;
+                    }
                 }
                 if (!colsShrinked) {
                     return new Position2D(colMinRow, cmid);
