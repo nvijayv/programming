@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class TwoMajority {
 
-    public int getTwoMajorityElement(List<Integer> numbers) {
+    public int getTwoMajorityElementIndex(List<Integer> numbers) {
         int length = numbers.size();
         int candidateIdx = 0;
         int candidateCountApprox = 1;
@@ -46,12 +46,14 @@ public class TwoMajority {
     public static void main(String[] args) {
         TwoMajority tm = new TwoMajority();
 
-        assert tm.getTwoMajorityElement(Collections.singletonList(1)) == 0;
-        assert tm.getTwoMajorityElement(Arrays.asList(1, 2)) == -1;
-        assert tm.getTwoMajorityElement(Arrays.asList(1, 1)) == 0;
-        assert tm.getTwoMajorityElement(Arrays.asList(1, 2, 1)) == 0;
-        assert tm.getTwoMajorityElement(Arrays.asList(3, 2, 1, 2)) == -1;
-        assert tm.getTwoMajorityElement(Arrays.asList(5, 1, 1, 1, 2, 3, 1, 1)) == 1;
-        assert tm.getTwoMajorityElement(Arrays.asList(5, 2, 3, 2, 2, 2, 5)) == 1;
+        assert tm.getTwoMajorityElementIndex(Collections.singletonList(1)) == 0;
+        assert tm.getTwoMajorityElementIndex(Arrays.asList(1, 2)) == -1;
+        assert tm.getTwoMajorityElementIndex(Arrays.asList(1, 1)) == 0;
+        assert tm.getTwoMajorityElementIndex(Arrays.asList(1, 2, 1)) == 0;
+        assert tm.getTwoMajorityElementIndex(Arrays.asList(3, 2, 1, 2)) == -1;
+        assert tm.getTwoMajorityElementIndex(Arrays.asList(5, 1, 1, 1, 2, 3, 1, 1)) == 1;
+        assert tm.getTwoMajorityElementIndex(Arrays.asList(5, 2, 3, 2, 2, 2, 5)) == 1;
+        assert tm.getTwoMajorityElementIndex(Arrays.asList(3, 3, 4, 2, 4, 4, 2, 4, 4)) == 2;
+        assert tm.getTwoMajorityElementIndex(Arrays.asList(3, 3, 4, 2, 4, 4, 2, 4)) == -1;
     }
 }
