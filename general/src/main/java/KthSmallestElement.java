@@ -5,17 +5,17 @@ import java.util.Random;
 /**
  * Created by nvijayv on 11/15/16.
  */
-public class KthElement {
+public class KthSmallestElement {
 
     private static Random rand = new Random();
 
-    public int getKthElement(int[] numbers, int start, int end, int K) {
+    public int getKthSmallestElement(int[] numbers, int start, int end, int K) {
         if (numbers == null) {
-            throw new RuntimeException("getKthElement received null array");
+            throw new RuntimeException("getKthSmallestElement received null array");
         }
         int len = end - start + 1;
         if (len == 0) {
-            throw new RuntimeException("getKthElement received empty array");
+            throw new RuntimeException("getKthSmallestElement received empty array");
         }
         if (start > end) {
             throw new RuntimeException("invalid start & end params: " + start + ", " + end);
@@ -34,9 +34,9 @@ public class KthElement {
         if (pivotActualIndex == K + start) {
             return numbers[K + start];
         } else if (pivotActualIndex > K + start) {
-            return getKthElement(numbers, start, pivotActualIndex - 1, K);
+            return getKthSmallestElement(numbers, start, pivotActualIndex - 1, K);
         } else {
-            return getKthElement(numbers, pivotActualIndex + 1, end, K + start - pivotActualIndex - 1);
+            return getKthSmallestElement(numbers, pivotActualIndex + 1, end, K + start - pivotActualIndex - 1);
         }
     }
 
@@ -148,29 +148,29 @@ public class KthElement {
         System.out.println("Test 1");
         for (int idx = 0; idx < 7; idx++) {
             int[] numbers = {3, 4, 2, 0, 6, -1, 8};     // [-1, 0, 2, 3, 4, 6, 8]
-            KthElement kthElement = new KthElement();
-            System.out.println(idx + "th element: " + kthElement.getKthElement(numbers, 0, numbers.length - 1, idx));
+            KthSmallestElement kthSmallestElement = new KthSmallestElement();
+            System.out.println(idx + "th element: " + kthSmallestElement.getKthSmallestElement(numbers, 0, numbers.length - 1, idx));
         }
         System.out.println("--------------------------\n");
 
         System.out.println("Test 2");
         for (int idx = 0; idx < 7; idx++) {
             int[] numbers = {23, 14, 12, 11, 10, 9, 8};     // [8, 9, 10, 11, 12, 14, 23]
-            KthElement kthElement = new KthElement();
-            System.out.println(idx + "th element: " + kthElement.getKthElement(numbers, 0, numbers.length - 1, idx));
+            KthSmallestElement kthSmallestElement = new KthSmallestElement();
+            System.out.println(idx + "th element: " + kthSmallestElement.getKthSmallestElement(numbers, 0, numbers.length - 1, idx));
         }
         System.out.println("--------------------------\n");
 
         System.out.println("Test 3");
         for (int idx = 0; idx < 7; idx++) {
             int[] numbers = {2, 1, 0, 1, 2, 8, 14, 6, 14, 8};     // [0, 1, 1, 2, 2, 6, 8, 8, 14, 14]
-            KthElement kthElement = new KthElement();
-            System.out.println(idx + "th element: " + kthElement.getKthElement(numbers, 0, numbers.length - 1, idx));
+            KthSmallestElement kthSmallestElement = new KthSmallestElement();
+            System.out.println(idx + "th element: " + kthSmallestElement.getKthSmallestElement(numbers, 0, numbers.length - 1, idx));
         }
         System.out.println("--------------------------\n");
 
 //        int[] numbers = {3, 4, 12, 10, 16, -1, -8};
         int[] numbers = {23, 14, 12, 11, 10, 9, 8};     // [8, 9, 10, 11, 12, 14, 23]
-        System.out.println("Median: " + new KthElement().getMedianOfMedians(numbers, 0, 6));
+        System.out.println("Median: " + new KthSmallestElement().getMedianOfMedians(numbers, 0, 6));
     }
 }
