@@ -99,8 +99,10 @@ class Graph {
 
     public int getMaxFlowDinitz() {
         int maxFlow = 0;
+        // Check if t is reachable from s, also construct the Level Graph alongside
         while (bfs(s, t)) {
             int flow;
+            // Find the blocking flow for the current level graph
              while ((flow = sendFlow(s, t)) > 0) {
                  maxFlow += flow;
              }
@@ -109,7 +111,6 @@ class Graph {
     }
 
     private boolean bfs(int s, int t) {
-        // Check if t is reachable from s, also construct the Level Graph meanwhile
         boolean sinkReachable = false;
         for (int i = 0; i < numNodes; i++) {
             level[i] = -1;
