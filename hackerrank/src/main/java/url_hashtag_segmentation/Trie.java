@@ -1,3 +1,5 @@
+package url_hashtag_segmentation;
+
 import java.io.*;
 import java.util.*;
 import java.net.URISyntaxException;

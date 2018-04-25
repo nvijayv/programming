@@ -2,7 +2,15 @@
 *.class
 *.pyc
 *.out
-.idea
 *.iml
 *.jar
+*~
+
+.idea/
+**/.idea/
+**/**/.idea/
+
+out/
 target/
+**/target/
+**/**/target/
